@@ -46,4 +46,5 @@ update :: proc(game: ^Game) {
 
 	update_ball(&game.ball, &game.paddle, game)
 	update_paddle(&game.paddle, game)
+	update_blocks(&game.blocks, &game.ball)
 }
