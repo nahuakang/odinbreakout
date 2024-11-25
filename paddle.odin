@@ -13,6 +13,10 @@ Paddle :: struct {
 	position: rl.Vector2,
 }
 
+new_paddle :: proc() -> Paddle {
+	return {position = {SCREEN_SIZE / 2 - PADDLE_WIDTH / 2, PADDLE_POS_Y}}
+}
+
 get_rect :: proc(paddle: ^Paddle) -> rl.Rectangle {
 	return {paddle.position.x, paddle.position.y, PADDLE_WIDTH, PADDLE_HEIGHT}
 }

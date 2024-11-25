@@ -18,6 +18,10 @@ Ball :: struct {
 	speed:         f32,
 }
 
+new_ball :: proc() -> Ball {
+	return {position = {SCREEN_SIZE / 2, BALL_START_Y}, radius = BALL_RADIUS, speed = BALL_SPEED}
+}
+
 check_border_collision :: proc(ball: ^Ball, game: ^Game) {
 	// Check right border collision
 	if ball.position.x + ball.radius > SCREEN_SIZE {
@@ -36,7 +40,6 @@ check_border_collision :: proc(ball: ^Ball, game: ^Game) {
 	}
 	// Check bottom border
 	if ball.position.y > SCREEN_SIZE + ball.radius {
-		// TODO: Enable restart
 		game^ = restart()
 	}
 }

@@ -14,25 +14,24 @@ FPS_TARGET :: 60
 Game :: struct {
 	ball:    Ball,
 	paddle:  Paddle,
+	blocks:  Blocks,
 	dt:      f32,
 	started: bool,
 }
 
 restart :: proc() -> Game {
-	return Game {
+	return {
 		started = false,
-		ball = Ball {
-			position = {SCREEN_SIZE / 2, BALL_START_Y},
-			radius = BALL_RADIUS,
-			speed = BALL_SPEED,
-		},
-		paddle = Paddle{position = {SCREEN_SIZE / 2 - PADDLE_WIDTH / 2, PADDLE_POS_Y}},
+		ball = new_ball(),
+		blocks = initialize_blocks(),
+		paddle = new_paddle(),
 	}
 }
 
 draw :: proc(game: ^Game) {
 	draw_ball(&game.ball)
 	draw_paddle(&game.paddle)
+	draw_blocks(&game.blocks)
 }
 
 update :: proc(game: ^Game) {

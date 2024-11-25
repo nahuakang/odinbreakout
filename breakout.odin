@@ -14,9 +14,7 @@ main :: proc() {
 
 	for !rl.WindowShouldClose() {
 		update(&game)
-		camera := rl.Camera2D {
-			zoom = f32(rl.GetScreenHeight()) / SCREEN_SIZE,
-		}
+		camera := new_camera()
 
 		rl.BeginDrawing()
 		rl.ClearBackground(BACKGROUND_COLOR)
