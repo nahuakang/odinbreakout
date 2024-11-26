@@ -8,13 +8,14 @@ import rl "vendor:raylib"
 main :: proc() {
 	rl.SetConfigFlags({.VSYNC_HINT})
 	rl.InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Breakout!")
+	rl.InitAudioDevice()
 	rl.SetTargetFPS(FPS_TARGET)
 
 	assets := load_assets()
 	game := restart()
 
 	for !rl.WindowShouldClose() {
-		update(&game)
+		update(&game, &assets)
 		camera := new_camera()
 
 		rl.BeginDrawing()
@@ -29,5 +30,6 @@ main :: proc() {
 		free_all(context.temp_allocator)
 	}
 
+	rl.CloseAudioDevice()
 	rl.CloseWindow()
 }

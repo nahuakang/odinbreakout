@@ -41,7 +41,7 @@ draw :: proc(game: ^Game, assets: ^Assets) {
 	}
 }
 
-update :: proc(game: ^Game) {
+update :: proc(game: ^Game, assets: ^Assets) {
 	game.dt = rl.GetFrameTime()
 
 	if !game.started {
@@ -55,7 +55,7 @@ update :: proc(game: ^Game) {
 		}
 	}
 
-	update_ball(&game.ball, &game.paddle, game)
+	update_ball(&game.ball, &game.paddle, game, assets)
 	update_paddle(&game.paddle, game)
-	update_blocks(&game.blocks, &game.ball, game)
+	update_blocks(&game.blocks, &game.ball, game, assets)
 }

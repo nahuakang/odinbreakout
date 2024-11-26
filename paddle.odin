@@ -22,7 +22,7 @@ get_rect :: proc(paddle: ^Paddle) -> rl.Rectangle {
 }
 
 draw_paddle :: proc(paddle: ^Paddle, assets: ^Assets) {
-	rl.DrawTextureV(assets.paddle, paddle.position, rl.WHITE)
+	rl.DrawTextureV(assets.paddle_texture, paddle.position, rl.WHITE)
 }
 
 update_paddle_position :: proc(paddle: ^Paddle, game: ^Game) {

@@ -22,7 +22,7 @@ new_ball :: proc() -> Ball {
 	return {position = {SCREEN_SIZE / 2, BALL_START_Y}, radius = BALL_RADIUS, speed = BALL_SPEED}
 }
 
-check_border_collision :: proc(ball: ^Ball, game: ^Game) {
+check_border_collision :: proc(ball: ^Ball, game: ^Game, assets: ^Assets) {
 	// Check right border collision
 	if ball.position.x + ball.radius > SCREEN_SIZE {
 		ball.position.x = SCREEN_SIZE - ball.radius
@@ -41,10 +41,11 @@ check_border_collision :: proc(ball: ^Ball, game: ^Game) {
 	// Check bottom border
 	if !game.game_over && ball.position.y > SCREEN_SIZE + ball.radius {
 		game.game_over = true
+		rl.PlaySound(assets.game_over_sound)
 	}
 }
 
-check_paddle_collision :: proc(ball: ^Ball, paddle: ^Paddle) {
+check_paddle_collision :: proc(ball: ^Ball, paddle: ^Paddle, assets: ^Assets) {
 	paddle_rect := get_rect(paddle)
 
 	if rl.CheckCollisionCircleRec(ball.position, ball.radius, paddle_rect) {
@@ -75,11 +76,13 @@ check_paddle_collision :: proc(ball: ^Ball, paddle: ^Paddle) {
 		if collision_normal != 0 {
 			update_ball_direction_with_norm(ball, linalg.normalize(collision_normal))
 		}
+
+		rl.PlaySound(assets.hit_paddle_sound)
 	}
 }
 
 draw_ball :: proc(ball: ^Ball, assets: ^Assets) {
-	rl.DrawTextureV(assets.ball, ball.position - {ball.radius, ball.radius}, rl.WHITE)
+	rl.DrawTextureV(assets.ball_texture, ball.position - {ball.radius, ball.radius}, rl.WHITE)
 }
 
 update_ball_position :: proc(ball: ^Ball, game: ^Game) {
@@ -95,10 +98,10 @@ update_ball_position :: proc(ball: ^Ball, game: ^Game) {
 	}
 }
 
-update_ball :: proc(ball: ^Ball, paddle: ^Paddle, game: ^Game) {
+update_ball :: proc(ball: ^Ball, paddle: ^Paddle, game: ^Game, assets: ^Assets) {
 	update_ball_position(ball, game)
-	check_border_collision(ball, game)
-	check_paddle_collision(ball, paddle)
+	check_border_collision(ball, game, assets)
+	check_paddle_collision(ball, paddle, assets)
 }
 
 update_ball_direction_to_paddle :: proc(ball: ^Ball, paddle: ^Paddle) {

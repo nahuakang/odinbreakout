@@ -1,5 +1,6 @@
 package breakout
 
+import "core:math/rand"
 import rl "vendor:raylib"
 
 BLOCKS_NUM_X :: 10
@@ -98,7 +99,7 @@ draw_blocks :: proc(blocks: ^Blocks) {
 	}
 }
 
-check_block_collision :: proc(blocks: ^Blocks, ball: ^Ball, game: ^Game) {
+check_block_collision :: proc(blocks: ^Blocks, ball: ^Ball, game: ^Game, assets: ^Assets) {
 	block_x_loop: for x in 0 ..< BLOCKS_NUM_X {
 		for y in 0 ..< BLOCKS_NUM_Y {
 			if !blocks[x][y] {
@@ -137,12 +138,16 @@ check_block_collision :: proc(blocks: ^Blocks, ball: ^Ball, game: ^Game) {
 				blocks[x][y] = false
 				row_color := row_colors[y]
 				game.score += block_color_score[row_color]
+
+				rl.SetSoundPitch(assets.hit_block_sound, rand.float32_range(0.8, 1.2))
+				rl.PlaySound(assets.hit_block_sound)
+
 				break block_x_loop
 			}
 		}
 	}
 }
 
-update_blocks :: proc(blocks: ^Blocks, ball: ^Ball, game: ^Game) {
-	check_block_collision(blocks, ball, game)
+update_blocks :: proc(blocks: ^Blocks, ball: ^Ball, game: ^Game, assets: ^Assets) {
+	check_block_collision(blocks, ball, game, assets)
 }
