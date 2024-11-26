@@ -26,9 +26,9 @@ restart :: proc() -> Game {
 	return {ball = new_ball(), blocks = initialize_blocks(), paddle = new_paddle()}
 }
 
-draw :: proc(game: ^Game) {
-	draw_ball(&game.ball)
-	draw_paddle(&game.paddle)
+draw :: proc(game: ^Game, assets: ^Assets) {
+	draw_ball(&game.ball, assets)
+	draw_paddle(&game.paddle, assets)
 	draw_blocks(&game.blocks)
 	draw_score_ui(game)
 

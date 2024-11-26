@@ -78,8 +78,8 @@ check_paddle_collision :: proc(ball: ^Ball, paddle: ^Paddle) {
 	}
 }
 
-draw_ball :: proc(ball: ^Ball) {
-	rl.DrawCircleV(ball.position, ball.radius, BALL_COLOR)
+draw_ball :: proc(ball: ^Ball, assets: ^Assets) {
+	rl.DrawTextureV(assets.ball, ball.position - {ball.radius, ball.radius}, rl.WHITE)
 }
 
 update_ball_position :: proc(ball: ^Ball, game: ^Game) {

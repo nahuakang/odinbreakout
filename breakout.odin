@@ -10,6 +10,7 @@ main :: proc() {
 	rl.InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Breakout!")
 	rl.SetTargetFPS(FPS_TARGET)
 
+	assets := load_assets()
 	game := restart()
 
 	for !rl.WindowShouldClose() {
@@ -20,7 +21,7 @@ main :: proc() {
 		rl.ClearBackground(BACKGROUND_COLOR)
 		rl.BeginMode2D(camera)
 
-		draw(&game)
+		draw(&game, &assets)
 
 		rl.EndMode2D()
 		rl.EndDrawing()

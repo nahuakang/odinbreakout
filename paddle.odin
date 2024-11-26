@@ -21,8 +21,8 @@ get_rect :: proc(paddle: ^Paddle) -> rl.Rectangle {
 	return {paddle.position.x, paddle.position.y, PADDLE_WIDTH, PADDLE_HEIGHT}
 }
 
-draw_paddle :: proc(paddle: ^Paddle) {
-	rl.DrawRectangleRec(get_rect(paddle), PADDLE_COLOR)
+draw_paddle :: proc(paddle: ^Paddle, assets: ^Assets) {
+	rl.DrawTextureV(assets.paddle, paddle.position, rl.WHITE)
 }
 
 update_paddle_position :: proc(paddle: ^Paddle, game: ^Game) {
