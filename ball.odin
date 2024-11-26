@@ -11,15 +11,20 @@ BALL_SPEED :: 260
 BALL_START_Y :: 160
 
 Ball :: struct {
-	position:      rl.Vector2,
-	prev_position: rl.Vector2,
-	direction:     rl.Vector2,
-	radius:        f32,
-	speed:         f32,
+	position:        rl.Vector2,
+	prev_position:   rl.Vector2,
+	render_position: rl.Vector2,
+	direction:       rl.Vector2,
+	radius:          f32,
+	speed:           f32,
 }
 
 new_ball :: proc() -> Ball {
 	return {position = {SCREEN_SIZE / 2, BALL_START_Y}, radius = BALL_RADIUS, speed = BALL_SPEED}
+}
+
+calc_ball_blend_position :: proc(ball: ^Ball, blend: f32) {
+	ball.render_position = math.lerp(ball.prev_position, ball.position, blend)
 }
 
 check_border_collision :: proc(ball: ^Ball, game: ^Game, assets: ^Assets) {
@@ -82,7 +87,11 @@ check_paddle_collision :: proc(ball: ^Ball, paddle: ^Paddle, assets: ^Assets) {
 }
 
 draw_ball :: proc(ball: ^Ball, assets: ^Assets) {
-	rl.DrawTextureV(assets.ball_texture, ball.position - {ball.radius, ball.radius}, rl.WHITE)
+	rl.DrawTextureV(
+		assets.ball_texture,
+		ball.render_position - {ball.radius, ball.radius},
+		rl.WHITE,
+	)
 }
 
 update_ball_position :: proc(ball: ^Ball, game: ^Game) {
