@@ -37,6 +37,13 @@ block_color_values := [Block_Color]rl.Color {
 	.Red    = BLOCK_RED_COLOR,
 }
 
+block_color_score := [Block_Color]int {
+	.Yellow = 2,
+	.Green  = 4,
+	.Orange = 6,
+	.Red    = 8,
+}
+
 initialize_blocks :: proc() -> Blocks {
 	blocks: Blocks
 	for x in 0 ..< BLOCKS_NUM_X {
@@ -91,7 +98,7 @@ draw_blocks :: proc(blocks: ^Blocks) {
 	}
 }
 
-check_block_collision :: proc(blocks: ^Blocks, ball: ^Ball) {
+check_block_collision :: proc(blocks: ^Blocks, ball: ^Ball, game: ^Game) {
 	block_x_loop: for x in 0 ..< BLOCKS_NUM_X {
 		for y in 0 ..< BLOCKS_NUM_Y {
 			if !blocks[x][y] {
@@ -128,12 +135,14 @@ check_block_collision :: proc(blocks: ^Blocks, ball: ^Ball) {
 				}
 
 				blocks[x][y] = false
+				row_color := row_colors[y]
+				game.score += block_color_score[row_color]
 				break block_x_loop
 			}
 		}
 	}
 }
 
-update_blocks :: proc(blocks: ^Blocks, ball: ^Ball) {
-	check_block_collision(blocks, ball)
+update_blocks :: proc(blocks: ^Blocks, ball: ^Ball, game: ^Game) {
+	check_block_collision(blocks, ball, game)
 }

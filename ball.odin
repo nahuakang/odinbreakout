@@ -79,7 +79,6 @@ check_paddle_collision :: proc(ball: ^Ball, paddle: ^Paddle) {
 }
 
 draw_ball :: proc(ball: ^Ball) {
-	// fmt.printfln("ball.position: %v", ball.position)
 	rl.DrawCircleV(ball.position, ball.radius, BALL_COLOR)
 }
 

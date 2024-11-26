@@ -17,6 +17,7 @@ Game :: struct {
 	blocks:  Blocks,
 	dt:      f32,
 	started: bool,
+	score:   int,
 }
 
 restart :: proc() -> Game {
@@ -32,6 +33,7 @@ draw :: proc(game: ^Game) {
 	draw_ball(&game.ball)
 	draw_paddle(&game.paddle)
 	draw_blocks(&game.blocks)
+	draw_ui(game)
 }
 
 update :: proc(game: ^Game) {
@@ -46,5 +48,5 @@ update :: proc(game: ^Game) {
 
 	update_ball(&game.ball, &game.paddle, game)
 	update_paddle(&game.paddle, game)
-	update_blocks(&game.blocks, &game.ball)
+	update_blocks(&game.blocks, &game.ball, game)
 }
