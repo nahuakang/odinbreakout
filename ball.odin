@@ -39,8 +39,8 @@ check_border_collision :: proc(ball: ^Ball, game: ^Game) {
 		update_ball_direction_with_norm(ball, rl.Vector2{0, 1})
 	}
 	// Check bottom border
-	if ball.position.y > SCREEN_SIZE + ball.radius {
-		game^ = restart()
+	if !game.game_over && ball.position.y > SCREEN_SIZE + ball.radius {
+		game.game_over = true
 	}
 }
 
